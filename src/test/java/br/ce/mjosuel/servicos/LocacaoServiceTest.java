@@ -5,6 +5,8 @@ import br.ce.mjosuel.exceptions.LocadoraException;
 import br.ce.mjosuel.entidades.Filme;
 import br.ce.mjosuel.entidades.Locacao;
 import br.ce.mjosuel.entidades.Usuario;
+import br.ce.mjosuel.matchers.DiaSemanaMatcher;
+import br.ce.mjosuel.matchers.MatchersProprios;
 import br.ce.mjosuel.servicos.LocacaoService;
 import br.ce.mjosuel.utils.DataUtils;
 import org.junit.*;
@@ -16,8 +18,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static br.ce.mjosuel.utils.DataUtils.isMesmaData;
-import static br.ce.mjosuel.utils.DataUtils.obterDataComDiferencaDias;
+import static br.ce.mjosuel.matchers.MatchersProprios.caiEm;
+import static br.ce.mjosuel.matchers.MatchersProprios.caiNumaSegunda;
+import static br.ce.mjosuel.utils.DataUtils.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -193,5 +196,10 @@ public class LocacaoServiceTest {
         //verificacao
         boolean ehSegunda = DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY);
         Assert.assertTrue(ehSegunda);
+
+        //assertThat(retorno.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
+        //assertThat(retorno.getDataRetorno(), caiEm(Calendar.MONDAY));
+        assertThat(retorno.getDataRetorno(), caiNumaSegunda());
+
     }
 }
