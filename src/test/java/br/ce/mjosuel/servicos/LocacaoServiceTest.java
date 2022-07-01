@@ -5,9 +5,7 @@ import br.ce.mjosuel.exceptions.LocadoraException;
 import br.ce.mjosuel.entidades.Filme;
 import br.ce.mjosuel.entidades.Locacao;
 import br.ce.mjosuel.entidades.Usuario;
-import br.ce.mjosuel.matchers.DiaSemanaMatcher;
-import br.ce.mjosuel.matchers.MatchersProprios;
-import br.ce.mjosuel.servicos.LocacaoService;
+
 import br.ce.mjosuel.utils.DataUtils;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
@@ -18,8 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static br.ce.mjosuel.matchers.MatchersProprios.caiEm;
-import static br.ce.mjosuel.matchers.MatchersProprios.caiNumaSegunda;
+import static br.ce.mjosuel.matchers.MatchersProprios.*;
 import static br.ce.mjosuel.utils.DataUtils.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -69,6 +66,8 @@ public class LocacaoServiceTest {
         error.checkThat(locacao.getValor(), is(not(6.0)));
         error.checkThat(isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
         error.checkThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), is(true));
+        error.checkThat(locacao.getDataRetorno(), ehHojeComDiferencaDias(1));
+        error.checkThat(locacao.getDataRetorno(), ehHoje());
     }
 
     @Test(expected = FilmeSemEstoqueException.class)
