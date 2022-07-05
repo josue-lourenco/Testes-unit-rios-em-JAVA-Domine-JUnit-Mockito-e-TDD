@@ -1,6 +1,8 @@
 package br.ce.mjosuel.servicos;
 
 import br.ce.mjosuel.buliders.UsuarioBuilder;
+import br.ce.mjosuel.dados.LocacaoDAO;
+import br.ce.mjosuel.dados.LocacaoDAOFake;
 import br.ce.mjosuel.exceptions.FilmeSemEstoqueException;
 import br.ce.mjosuel.exceptions.LocadoraException;
 import br.ce.mjosuel.entidades.Filme;
@@ -36,6 +38,8 @@ public class LocacaoServiceTest {
     @Before
     public void setup(){
         service = new LocacaoService();
+        LocacaoDAO dao = new LocacaoDAOFake();
+        service.setLocacaoDAO(dao);
     }
 
     @Test
