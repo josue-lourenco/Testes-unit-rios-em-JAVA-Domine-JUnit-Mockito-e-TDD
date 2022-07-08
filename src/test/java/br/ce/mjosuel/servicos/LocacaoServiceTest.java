@@ -13,6 +13,7 @@ import br.ce.mjosuel.utils.DataUtils;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -27,7 +28,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class LocacaoServiceTest {
 
-    private LocacaoService service;
+    public LocacaoService service;
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
@@ -38,7 +39,8 @@ public class LocacaoServiceTest {
     @Before
     public void setup(){
         service = new LocacaoService();
-        LocacaoDAO dao = new LocacaoDAOFake();
+        //LocacaoDAO dao = new LocacaoDAOFake();
+        LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
         service.setLocacaoDAO(dao);
     }
 

@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,6 +25,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(Parameterized.class)
 public class CalculoValorLocacaoTest {
 
+    private LocacaoService service;
+
     @Parameterized.Parameter
     public List<Filme> filmes;
 
@@ -33,12 +36,11 @@ public class CalculoValorLocacaoTest {
     @Parameterized.Parameter(value=2)
     public String cenario;
 
-    private LocacaoService service;
-
     @Before
     public void setup(){
         service = new LocacaoService();
-        LocacaoDAO dao = new LocacaoDAOFake();
+        //LocacaoDAO dao = new LocacaoDAOFake();
+        LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
         service.setLocacaoDAO(dao);
     }
 
