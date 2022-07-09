@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import static br.ce.mjosuel.buliders.FilmeBuilder.umFilme;
+import static br.ce.mjosuel.buliders.UsuarioBuilder.umUsuario;
 import static br.ce.mjosuel.matchers.MatchersProprios.*;
 import static br.ce.mjosuel.utils.DataUtils.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -28,7 +29,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class LocacaoServiceTest {
 
-    public LocacaoService service;
+    private LocacaoService service;
+
+    private SPCService spc;
+
+    private LocacaoDAO dao;
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
@@ -40,8 +45,10 @@ public class LocacaoServiceTest {
     public void setup(){
         service = new LocacaoService();
         //LocacaoDAO dao = new LocacaoDAOFake();
-        LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
+        dao = Mockito.mock(LocacaoDAO.class);
         service.setLocacaoDAO(dao);
+        spc = Mockito.mock(SPCService.class);
+        service.setSpcService(spc);
     }
 
     @Test
@@ -52,7 +59,6 @@ public class LocacaoServiceTest {
         //cenario
         //Usuario usuario = new Usuario("Usuario 1");
         Usuario usuario = UsuarioBuilder.umUsuario().agora();
-
 
         List<Filme> filmes = Arrays.asList(umFilme().comValor(5.0).agora());
 
@@ -214,5 +220,21 @@ public class LocacaoServiceTest {
         //assertThat(retorno.getDataRetorno(), caiEm(Calendar.MONDAY));
         assertThat(retorno.getDataRetorno(), caiNumaSegunda());
 
+    }
+
+    public void naoDeveAlugarFilmeParaNegativadoSPC() throws FilmeSemEstoqueException, LocadoraException
+    {
+        //cenario
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        Usuario usuario2 = UsuarioBuilder.umUsuario().comNome("Usuario 2").agora();
+        List<Filme> filmes = Arrays.asList(umFilme().agora());
+
+        Mockito.when(spc.possuiNegativacao(usuario2)).thenReturn(true);
+
+        exception.expect(LocadoraException.class);
+        exception.expectMessage("Usuário Negativado");
+
+        //acao
+        service.alugarFilme(usuario,filmes);
     }
 }
