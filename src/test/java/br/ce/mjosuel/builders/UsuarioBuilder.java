@@ -1,4 +1,4 @@
-package br.ce.mjosuel.buliders;
+package br.ce.mjosuel.builders;
 
 import br.ce.mjosuel.entidades.Usuario;
 

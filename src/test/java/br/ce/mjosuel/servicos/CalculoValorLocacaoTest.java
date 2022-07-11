@@ -1,8 +1,7 @@
 package br.ce.mjosuel.servicos;
 
-import br.ce.mjosuel.buliders.UsuarioBuilder;
+import br.ce.mjosuel.builders.UsuarioBuilder;
 import br.ce.mjosuel.dados.LocacaoDAO;
-import br.ce.mjosuel.dados.LocacaoDAOFake;
 import br.ce.mjosuel.exceptions.FilmeSemEstoqueException;
 import br.ce.mjosuel.exceptions.LocadoraException;
 import br.ce.mjosuel.entidades.Filme;
@@ -18,7 +17,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static br.ce.mjosuel.buliders.FilmeBuilder.umFilme;
+import static br.ce.mjosuel.builders.FilmeBuilder.umFilme;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
