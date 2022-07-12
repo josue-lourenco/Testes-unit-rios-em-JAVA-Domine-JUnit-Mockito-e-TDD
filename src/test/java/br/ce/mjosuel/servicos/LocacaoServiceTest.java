@@ -226,20 +226,24 @@ public class LocacaoServiceTest {
     }
 
     @Test
-    public void naoDeveAlugarFilmeParaNegativadoSPC() throws FilmeSemEstoqueException, LocadoraException
+    public void naoDeveAlugarFilmeParaNegativadoSPC() throws FilmeSemEstoqueException
     {
         //cenario
         Usuario usuario = UsuarioBuilder.umUsuario().agora();
-        Usuario usuario2 = UsuarioBuilder.umUsuario().comNome("Usuario 2").agora();
         List<Filme> filmes = Arrays.asList(umFilme().agora());
 
         Mockito.when(spc.possuiNegativacao(usuario)).thenReturn(true);
 
-        exception.expect(LocadoraException.class);
-        exception.expectMessage("Usuario Negativado");
-
         //acao
-        service.alugarFilme(usuario,filmes);
+        try{
+            service.alugarFilme(usuario,filmes);
+            Assert.fail();
+        } catch (LocadoraException e){
+            Assert.assertThat(e.getMessage(),is("Usuario Negativado"));
+        }
+
+        //verificacao
+        Mockito.verify(spc).possuiNegativacao(usuario);
     }
 
     @Test
@@ -256,6 +260,5 @@ public class LocacaoServiceTest {
 
         //verificacao
         Mockito.verify(email).notificarAtraso(usuario);
-
     }
 }
