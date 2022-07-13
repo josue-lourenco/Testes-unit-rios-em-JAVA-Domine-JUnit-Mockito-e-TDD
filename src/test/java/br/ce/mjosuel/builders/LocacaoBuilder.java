@@ -11,6 +11,8 @@ import java.util.Date;
 import br.ce.mjosuel.entidades.Filme;
 import br.ce.mjosuel.entidades.Locacao;
 
+import static br.ce.mjosuel.utils.DataUtils.obterDataComDiferencaDias;
+
 
 public class LocacaoBuilder {
     private Locacao elemento;
@@ -30,7 +32,7 @@ public class LocacaoBuilder {
         elemento.setUsuario(UsuarioBuilder.umUsuario().agora());
         elemento.setFilmes(Arrays.asList(FilmeBuilder.umFilme().agora()));
         elemento.setDataLocacao(new Date());
-        elemento.setDataRetorno(DataUtils.obterDataComDiferencaDias(1));
+        elemento.setDataRetorno(obterDataComDiferencaDias(1));
         elemento.setValor(4.0);
     }
 
@@ -61,5 +63,11 @@ public class LocacaoBuilder {
 
     public Locacao agora() {
         return elemento;
+    }
+
+    public LocacaoBuilder atrasada(){
+        elemento.setDataLocacao(obterDataComDiferencaDias(-4));
+        elemento.setDataRetorno(obterDataComDiferencaDias(-2));
+        return this;
     }
 }

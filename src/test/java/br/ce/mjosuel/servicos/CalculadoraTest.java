@@ -23,7 +23,7 @@ class CalculadoraTest {
         int b = 3;
 
         //ação
-        int resultado = calc.soma(a,b);
+        int resultado = calc.somar(a,b);
 
         //verificação
         Assert.assertEquals(8,resultado);
