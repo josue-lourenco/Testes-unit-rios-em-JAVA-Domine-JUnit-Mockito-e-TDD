@@ -13,7 +13,10 @@ import br.ce.mjosuel.utils.DataUtils;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.internal.configuration.injection.MockInjection;
 
 import java.util.Arrays;
@@ -30,12 +33,16 @@ import static org.mockito.Mockito.*;
 
 public class LocacaoServiceTest {
 
+    @InjectMocks
     private LocacaoService service;
 
+    @Mock
     private SPCService spc;
 
+    @Mock
     private LocacaoDAO dao;
 
+    @Mock
     private EmailService email;
 
     @Rule
@@ -46,14 +53,7 @@ public class LocacaoServiceTest {
 
     @Before
     public void setup(){
-        service = new LocacaoService();
-        //LocacaoDAO dao = new LocacaoDAOFake();
-        dao = Mockito.mock(LocacaoDAO.class);
-        service.setLocacaoDAO(dao);
-        spc = Mockito.mock(SPCService.class);
-        service.setSpcService(spc);
-        email = Mockito.mock(EmailService.class);
-        service.setEmailService(email);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
