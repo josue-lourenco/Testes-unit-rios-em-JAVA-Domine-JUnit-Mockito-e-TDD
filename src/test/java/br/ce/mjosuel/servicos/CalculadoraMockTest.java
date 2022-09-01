@@ -40,7 +40,7 @@ public class CalculadoraMockTest {
         System.out.println("Spy");
         calcSpy.imprime();
     }
-    
+
     @Test
     public void teste(){
         Calculadora calc = Mockito.mock(Calculadora.class);
